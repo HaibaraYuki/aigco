@@ -1,0 +1,47 @@
+[project]
+name = "aigco"
+version = "0.0.4"
+description = "Omni LLM, Agent and inference"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "python-dotenv",
+    "datasets>=2.18.0",
+    "peft>=0.7.1",
+    "pip>=24.0",
+    "swanlab>=0.3.0",
+    "torch==2.10.0",
+    "torchvision",
+    "transformers>=5.1.0",
+]
+
+[project.optional-dependencies]
+flash_attn = [
+    "flash-attn"
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+# 强制 torch 走官方源，其他走清华源
+[tool.uv.sources]
+torch = { index = "pytorch-cu130" }
+torchvision = { index = "pytorch-cu130" }
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["aigco*"]
+exclude = ["examples*", "runs*"]
+
+[pypi-options]
+index-url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+
+# CUDA 13.1
+# flash-dev: https://flashattn.dev/
+# pytroch: https://pytorch.org/get-started/locally/
+# chat: https://gemini.google.com/app/f8f8ce685d2aae2c
+
+# to use examples 
+# uv pip install -e.
